@@ -38,7 +38,7 @@ export interface FinanceSummary {
 }
 
 /** Etiqueta idéntica en UI para gasto e ingreso; los códigos internos siguen siendo `OTROS_GASTO` y `OTROS_INGRESO`. */
-const LABEL_OTROS = 'OTROS'
+const LABEL_OTROS = 'Otros'
 
 export const expenseCategoryLabels: Record<ExpenseCategory, string> = {
   OCIO: 'Ocio',
