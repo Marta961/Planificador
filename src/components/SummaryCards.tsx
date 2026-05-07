@@ -8,9 +8,9 @@ export const SummaryCards = () => {
 
   return (
     <section className="grid gap-3 sm:grid-cols-3" aria-label="Resumen financiero">
-      <StatCard title="Ingresos" value={formatCurrencyEUR(summary.totalIngresos)} variant="income" />
-      <StatCard title="Gastos" value={formatCurrencyEUR(summary.totalGastos)} variant="expense" />
-      <StatCard title="Balance" value={formatCurrencyEUR(summary.balance)} variant="balance" />
+      <StatCard title="Ingresos" value={formatCurrencyEUR(summary.totalIngresos)} />
+      <StatCard title="Gastos" value={formatCurrencyEUR(summary.totalGastos)} />
+      <StatCard title="Balance" value={formatCurrencyEUR(summary.balance)} />
     </section>
   )
 }
