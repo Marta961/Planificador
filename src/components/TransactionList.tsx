@@ -20,10 +20,7 @@ export const TransactionList = ({ onSelectDetail, showEditLink = true }: Transac
   return (
     <Card>
       <CardHeader className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-base font-semibold text-slate-900">Transferencias</h2>
-          <p className="text-sm text-slate-600">Movimientos tipados como ingresos o gastos.</p>
-        </div>
+        <h2 className="text-base font-semibold text-slate-900">Transferencias</h2>
         <span className="rounded-full bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700">
           {transactions.length} registros
         </span>
@@ -31,7 +28,7 @@ export const TransactionList = ({ onSelectDetail, showEditLink = true }: Transac
       <CardBody className="pt-0">
         {transactions.length === 0 ? (
           <p className="rounded-lg border border-dashed border-slate-200 bg-slate-50 px-3 py-6 text-center text-sm text-slate-600">
-            No hay movimientos todavía. Añade uno o carga datos de ejemplo.
+            No tienes transferencias bancarias.
           </p>
         ) : (
           <ul className="divide-y divide-slate-100">
