@@ -21,6 +21,7 @@ export interface FinanceContextValue {
   clearMutationError: () => void
   addTransaction: (payload: CreateTransactionInput) => Promise<void>
   updateTransaction: (id: string, payload: UpdateTransactionInput) => Promise<void>
+  deleteTransaction: (id: string) => Promise<void>
   loadSampleData: () => Promise<void>
   regenerateSampleData: () => Promise<void>
 }
