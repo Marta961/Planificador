@@ -203,7 +203,7 @@ export const TransactionForm = ({
 
             <FormField
               id={`${idPrefix}-amount`}
-              label="Importe (EUR)"
+              label="Importe en euros"
               required
               error={fieldErrors.amount}
               hint="Importe obligatorio (número mayor que cero)."
