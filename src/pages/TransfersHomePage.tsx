@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { ConfirmModal } from '../components/ConfirmModal'
 import { SummaryCards } from '../components/SummaryCards'
 import { TransactionDetailModal } from '../components/TransactionDetailModal'
 import { TransactionList } from '../components/TransactionList'
@@ -16,38 +15,9 @@ export const TransfersHomePage = () => {
     mutationInFlight,
     mutationError,
     clearMutationError,
-    loadSampleData,
-    regenerateSampleData,
   } = useFinance()
 
   const [selected, setSelected] = useState<Transaction | null>(null)
-  const [confirmRegenOpen, setConfirmRegenOpen] = useState(false)
-  const [sampleAction, setSampleAction] = useState<null | 'load' | 'regen'>(null)
-
-  const handleLoadSamples = async () => {
-    setSampleAction('load')
-    try {
-      await loadSampleData()
-    } catch {
-      /* El proveedor ya expone mutationError */
-    } finally {
-      setSampleAction(null)
-    }
-  }
-
-  const handleRegenerate = async () => {
-    setSampleAction('regen')
-    try {
-      await regenerateSampleData()
-      setConfirmRegenOpen(false)
-    } catch {
-      /* El proveedor ya expone mutationError */
-    } finally {
-      setSampleAction(null)
-    }
-  }
-
-  const sampleBusy = sampleAction !== null || mutationInFlight
 
   return (
     <>
@@ -84,27 +54,6 @@ export const TransfersHomePage = () => {
 
       <SummaryCards />
 
-      <section className="mt-4 flex flex-wrap gap-2">
-        <Button
-          variant="secondary"
-          loading={sampleAction === 'load'}
-          disabled={listLoading || sampleBusy}
-          onClick={() => void handleLoadSamples()}
-        >
-          Importar muestras al servidor
-        </Button>
-        <Button
-          variant="danger"
-          disabled={listLoading || sampleBusy}
-          onClick={() => {
-            setSelected(null)
-            setConfirmRegenOpen(true)
-          }}
-        >
-          Regenerar e importar muestras
-        </Button>
-      </section>
-
       <section className="mt-6">
         {listLoading ? (
           <div className="flex items-center justify-center rounded-xl border border-slate-200 bg-white p-8 text-sm text-slate-600 shadow-sm">
@@ -116,17 +65,6 @@ export const TransfersHomePage = () => {
       </section>
 
       <TransactionDetailModal transaction={selected} onClose={() => setSelected(null)} />
-
-      <ConfirmModal
-        open={confirmRegenOpen}
-        title="Regenerar datos de ejemplo"
-        description="Se obtendrá un nuevo lote de ejemplo y se creará en el servidor (POST por cada fila). Puede duplicar movimientos si ya existían."
-        confirmLabel="Sí, importar"
-        cancelLabel="Cancelar"
-        loading={sampleAction === 'regen'}
-        onCancel={() => setConfirmRegenOpen(false)}
-        onConfirm={handleRegenerate}
-      />
     </>
   )
 }
