@@ -80,6 +80,21 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [])
 
+  const deleteTransaction = useCallback(async (id: string) => {
+    setMutationInFlight(true)
+    setMutationError(null)
+    try {
+      await apiClient.deleteTransaction(id)
+      setTransactions((prev) => prev.filter((item) => item.id !== id))
+    } catch (error) {
+      const message = error instanceof ApiError ? error.message : 'No se pudo eliminar el movimiento.'
+      setMutationError(message)
+      throw error
+    } finally {
+      setMutationInFlight(false)
+    }
+  }, [])
+
   const loadSampleData = useCallback(async () => {
     setMutationInFlight(true)
     setMutationError(null)
@@ -148,6 +163,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       clearMutationError,
       addTransaction,
       updateTransaction,
+      deleteTransaction,
       loadSampleData,
       regenerateSampleData,
     }),
@@ -162,6 +178,7 @@ export const FinanceProvider = ({ children }: { children: ReactNode }) => {
       clearMutationError,
       addTransaction,
       updateTransaction,
+      deleteTransaction,
       loadSampleData,
       regenerateSampleData,
     ],
