@@ -38,13 +38,13 @@ const buildUrl = (path: string) => {
   return `${base}${path}`
 }
 
-const parseJsonBody = async (res: Response): Promise<unknown> => {
+const parseJsonBody = async (res: Response): Promise<{ parsed: unknown; rawText: string }> => {
   const text = await res.text()
-  if (!text) return null
+  if (!text) return { parsed: null, rawText: '' }
   try {
-    return JSON.parse(text) as unknown
+    return { parsed: JSON.parse(text) as unknown, rawText: text }
   } catch {
-    throw new ApiError(res.status, 'INVALID_JSON', 'La respuesta no es JSON válido.')
+    return { parsed: null, rawText: text }
   }
 }
 
@@ -63,15 +63,16 @@ const requestData = async <T>(path: string, init?: RequestInit): Promise<T> => {
         },
       })
 
-      const parsed = await parseJsonBody(res)
+      const { parsed, rawText } = await parseJsonBody(res)
 
       if (!res.ok) {
         const body = parsed as Partial<ApiErrorBody> | null
         const err = body?.error
+        const fallbackMessage = rawText.trim() || res.statusText
         const apiError = new ApiError(
           res.status,
           err?.code ?? 'HTTP_ERROR',
-          err?.message ?? res.statusText,
+          err?.message ?? fallbackMessage,
           err?.details,
         )
 
