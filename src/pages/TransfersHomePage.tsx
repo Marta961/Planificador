@@ -23,9 +23,6 @@ export const TransfersHomePage = () => {
     <>
       <header className="mb-6">
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Transferencias bancarias</h1>
-        <p className="mt-2 max-w-2xl text-sm text-slate-600">
-          Vista principal: los movimientos viven en el backend (API). Usa la navegación para alta o edición.
-        </p>
       </header>
 
       {listError && !listLoading ? (
